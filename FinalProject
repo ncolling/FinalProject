@@ -1,0 +1,45 @@
+#length
+def inchToCm():
+    numCm = getNumber*2.54
+    return numCm
+def cmToInch():
+    numIn = getNumber/2.54
+    return numIn
+def ftToM():
+    numM = getNumber*0.3048
+    return numM
+def mToFt():
+    numFt = getNumber/0.3048
+    return numFt
+def miToKm():
+    numKm = getNumber*1.609
+    return numKm
+def kmToMi():
+    numMi = getNumber/1.609
+    return numMi
+#Volume
+def galToL():
+    numL = getNumber*4.546
+    return numL
+def ltoGal():
+    numGal = getnumber/4.546
+    return numGal
+#weight
+def lbToKg():
+    numKg = getNumber*0.453
+    return numKg
+def kgToLb():
+    numLb = getNumber/0.453
+    return numLb
+#Temperature
+def fToC():
+    numC = (getNumber - 32)*9/5
+    return numC
+def cToF():
+    numF = (5/9)*getNumber +32
+    return numF
+
+def main():
+    getNumber = input("Enter number to convert")
+if __name__ == "__main__":
+    main()
