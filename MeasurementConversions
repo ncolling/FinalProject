@@ -1,0 +1,325 @@
+"""
+Project: Measurement Converter
+Author: Nicholas Colling
+This program is a GUI application of a conversion calculator in which the user
+enters their measurement and selects the appropriate conversion rate between
+their unit and the desired unit to convert to.
+"""
+
+
+#Imports GUI
+
+from breezypythongui import EasyFrame
+from tkinter import PhotoImage
+from tkinter.font import Font
+
+
+#Defines Class for the GUI to display the converter
+
+class MeasurementConverter(EasyFrame):
+    def __init__(self):
+        #Defines the title of the GUI
+        EasyFrame.__init__(self, title = "Measurement Converter")
+        self.setResizable(False); #locks the GUI window preventing resizing
+        
+
+#Creates Panels within the GUI for formatting and alignment puproses.
+
+        massPanel = self.addPanel(row = 0, column = 0,
+                                  background = "gray")#defines the color of the background
+        distancePanel = self.addPanel(row = 0, column = 1,
+                                      background = "gray")#defines the color of the background
+        temperaturePanel = self.addPanel(row = 0, column = 2,
+                                         background = "gray")#defines the color of the background
+        volumePanel = self.addPanel(row = 0, column = 3,
+                                    background = "gray")#defines the color of the background
+        massButtonPanel = self.addPanel(row = 1, column = 0,
+                                        background = "#5b5b5b")#defines the color of the background
+        distanceButtonPanel = self.addPanel(row = 1, column =1,
+                                            background = "#5b5b5b")#defines the color of the background
+        temperatureButtonPanel = self.addPanel (row = 1, column = 2,
+                                                background = "#5b5b5b")#defines the color of the background
+        volumeButtonPanel = self.addPanel (row = 1, column = 3,
+                                           background = "#5b5b5b")#defines the color of the background
+        resultPanel = self.addPanel(row = 2, column = 0, columnspan = 4, 
+                                    background = "gray")#defines the color of the background
+      
+#Creates image labels within given panel assignments from above.
+
+        imageMass = massPanel.addLabel(text ="Mass",
+                                   row = 0, column = 0, columnspan = 2,
+                                   sticky = "NSEW")#used to center align the image
+        imageDistance = distancePanel.addLabel(text ="Distance",
+                                   row = 0, column = 0, columnspan = 2,
+                                   sticky = "NSEW")#used to center align the image        
+        imageTemperature = temperaturePanel.addLabel(text ="Temperature",
+                                   row = 0, column = 0, columnspan = 2,
+                                   sticky = "NSEW")#used to center align the image
+        imageVolume = volumePanel.addLabel(text ="Volume",
+                                   row = 0, column = 0, columnspan = 2,
+                                   sticky = "NSEW")#used to center align the image
+
+
+#Button Section, including all the code to create buttons within the GUI.
+        
+    #Mass Panel -- assigns the following buttons to the given panel.
+        self.pound = massButtonPanel.addButton(text = "kg to lb", row = 0,
+                                         column = 1, command = self.kgToLb)#calls conversion function
+        self.kilogram = massButtonPanel.addButton(text = "lb to kg", row = 0,
+                                            column = 0, command = self.lbToKg)#calls conversion function
+        
+    #Distance Panel -- assigns the following buttons to the given panel.
+        self.inch = distanceButtonPanel.addButton(text = "cm to in", row = 0,
+                                   column = 1, command = self.cmToInch)#calls conversion function
+        self.cm = distanceButtonPanel.addButton(text = "in to cm", row = 0,
+                                 column = 0, command = self.inchToCm)#calls conversion function
+        self.feet = distanceButtonPanel.addButton(text = "m to ft", row = 1,
+                                            column = 1, command = self.mToFt)#calls conversion function
+        self.meters = distanceButtonPanel.addButton(text = "ft to m", row = 1,
+                                              column = 0, command = self.ftToM)#calls conversion function
+        self.miles = distanceButtonPanel.addButton(text = "km to mi", row = 2,
+                                             column = 1, command = self.kmToMi)#calls conversion function
+        self.km = distanceButtonPanel.addButton(text = "mi to km", row = 2,
+                                          column = 0, command = self.miToKm)#calls conversion function
+        
+    #Temperature Panel -- assigns the following buttons to the given panel.
+        self.fahrenheit = temperatureButtonPanel.addButton(text = "C to F", row = 0,
+                                                     column = 1, command = self.cToF)#calls conversion function
+        self.celsius = temperatureButtonPanel.addButton(text = "F to C", row = 0,
+                                                  column = 0, command = self.fToC)#calls conversion function
+        
+    #Volume Panel -- assigns the following buttons to the given panel.
+        self.gallon = volumeButtonPanel.addButton(text = "L to gal", row = 0,
+                                            column = 1, command = self.lToGal)#calls conversion function
+        self.liter = volumeButtonPanel.addButton(text = "gal to L", row = 0,
+                                           column = 0, command = self.galToL)#calls conversion function
+        
+    #Result Panel -- assigns the following buttons to the given panel.
+        
+        #adds the text label for the immediately following button
+        resultPanel.addLabel(text = "Enter Measurement:", row = 0, column = 0 ,columnspan =2, sticky = "E")#alligns to the right
+        
+        self.inputField = resultPanel.addFloatField(value = "",
+                                             row = 0,
+                                             column = 2, sticky = "W",
+                                             width = 15)#sticky = "W" alligns to the left
+
+        #adds the text label for the immediatley following button
+        resultPanel.addLabel(text = "Converted Value:", row = 0, column = 3, sticky = "E") #alligns to the right
+        
+        self.outputField = resultPanel.addTextField(text = "",
+                                             row = 0,
+                                             column = 4, sticky = "W",
+                                                    width = 15,
+                                                    state="readonly")#assignments for allignment and state of the field.
+        
+        self.reset = resultPanel.addButton(text = "Reset", row = 0, column = 5,
+                                           state = "disabled",
+                                           command = self.reset)#assigns the button state and calls reset function.
+        
+        self.exit = resultPanel.addButton(text = "Exit", row = 0, column = 6,
+                                          command = self.quit)#calls the quit function
+        
+ 
+#Image Calls to generate the given images within the designated labels.
+
+        self.mass = PhotoImage(file= "mass.gif")
+        imageMass["image"] = self.mass #creates the mass image
+        
+        self.distance = PhotoImage(file="distance.gif")
+        imageDistance["image"] = self.distance #creates the distance image
+        
+        self.temperature = PhotoImage(file="temperature.gif")
+        imageTemperature["image"] = self.temperature #creates the temperature image
+        
+        self.volume = PhotoImage(file="volume.gif")
+        imageVolume["image"] = self.volume #creates the volume image
+        self.startUp() #calls startup to open popup window with directions
+
+    
+#Function section for program operation and button commands.
+        
+    #Validator is called to verify float number and positive entry within conversion.
+    def validator(self):
+        try:
+            value = self.inputField.getNumber() #pulls value from the input field
+            if value < 0: 
+                value = value*(-1) #used to ensure positive measurements 
+                return value
+            else:
+                return value
+        except ValueError:
+            self.messageBox(title = "Error",
+                            message = "Please enter a numerical value to convert")
+
+    #Validator2 is called to verify float number for temperatures within conversion
+    def validator2(self):
+        try:
+            value = self.inputField.getNumber() #pulls value from the input field
+            return value
+        except ValueError:
+            self.messageBox(title = "Error",
+                            message = "Please enter a numerical value to convert")            
+
+   
+
+    #Complete disables all conversion buttons after the use of one to prevent user from erroneously hitting another        
+    def complete(self):
+        self.pound["state"] = "disabled"
+        self.kilogram["state"] = "disabled"
+        self.inch["state"] = "disabled"
+        self.cm["state"] = "disabled"
+        self.feet["state"] = "disabled"
+        self.meters["state"] = "disabled"
+        self.miles["state"] = "disabled"
+        self.km["state"] = "disabled"
+        self.fahrenheit["state"] = "disabled"
+        self.celsius["state"] = "disabled"
+        self.gallon["state"] = "disabled"
+        self.liter["state"] = "disabled"
+        self.reset["state"] = "normal" #enables the reset button
+
+    #Reset returns original state of the program before any conversions were execute.    
+    def reset(self):    
+        self.pound["state"] = "normal"
+        self.kilogram["state"] = "normal"
+        self.inch["state"] = "normal"
+        self.cm["state"] = "normal"
+        self.feet["state"] = "normal"
+        self.meters["state"] = "normal"
+        self.miles["state"] = "normal"
+        self.km["state"] = "normal"
+        self.fahrenheit["state"] = "normal"
+        self.celsius["state"] = "normal"
+        self.gallon["state"] = "normal"
+        self.liter["state"] = "normal"
+        self.reset["state"] = "disabled"
+        self.inputField.setPrecision(1)
+        self.inputField.setNumber(0)
+        self.outputField.setText("")
+
+    #Start up creates a messagebox to inform the user how to perform conversions.
+    def startUp(self):
+        self.messageBox(title="Welcome!",
+                        message = "To begin, simply enter a measurement and select your desired units to convert.")
+        
+   
+#Distance Formulas for conversions
+
+    #Centimeters to Inches
+    def cmToInch(self):
+        getNumber = self.validator() #calls the validator function
+        numIn = getNumber/2.54 #takes returned variable and converts
+        message = str(format(numIn,'.2f'))+" inches" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+    #Inches to Centimeters   
+    def inchToCm(self):
+        getNumber = self.validator() #calls the validator function
+        numCm = getNumber*2.54 #takes returned variable and converts
+        message = str(format(numCm,'.2f'))+" centimeters" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+    #Feet to Meters
+    def ftToM(self):
+        getNumber = self.validator() #calls the validator function
+        numM = getNumber*0.3048 #takes returned variable and converts
+        message = str(format(numM,'.2f'))+" meters" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+    #Meters to Feet
+    def mToFt(self): 
+        getNumber = self.validator() #calls the validator function
+        numFt = getNumber/0.3048 #takes returned variable and converts
+        message = str(format(numFt,'.2f'))+" feet" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+    #Miles to Kilometers
+    def miToKm(self):
+        getNumber = self.validator() #calls validator function
+        numKm = getNumber*1.609 #takes returned variable and converts
+        message = str(format(numKm,'.2f'))+" kilometers" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete()
+
+    #Kilometers to Miles
+    def kmToMi(self):
+        getNumber = self.validator() #calls validator function
+        numMi = getNumber/1.609 #takes returned variable and converts
+        message = str(format(numMi,'.2f'))+" miles" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+       
+#Volume formulas for conversions
+
+    #Gallons to Liters
+    def galToL(self):
+        getNumber = self.validator() #calls validator function
+        numL = getNumber*4.546 #takes returned variable and converts
+        message = str(format(numL,'.2f'))+" liters" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+    #Liters to Gallons
+    def lToGal(self):
+        getNumber = self.validator() #calls validator function
+        numGal = getNumber/4.546 #takes returned variable and converts
+        message = str(format(numGal,'.2f'))+" gallons" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+      
+#Mass formulas for conversions
+
+    #Pounds to Kilograms
+    def lbToKg(self):
+        getNumber = self.validator() #calls validator function
+        numKg = getNumber*0.453 #takes returned variable and converts
+        message = str(format(numKg,'.2f'))+" kilograms" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+    #Kilograms to Pounds
+    def kgToLb(self):
+        getNumber = self.validator() #calls validator function
+        numLb = getNumber/0.453 #takes returned variable and converts
+        message = str(format(numLb,'.2f'))+" pounds" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+      
+#Temperature formulas for conversions
+
+    #Fahrenheit to Celsius
+    def fToC(self):
+        getNumber = self.validator2() #calls validator function
+        numC = (getNumber - 32)*5/9 #takes returned variable and converts
+        message = str(format(numC,'.1f'))+chr(176)+"Celsius" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+
+    #Celsius to Fahrenheit
+    def cToF(self):
+        getNumber = self.validator2() #calls validator function
+        numF = (9/5)*getNumber +32 #takes returned variable and converts
+        message = str(format(numF,'.1f'))+chr(176)+"Fahrenheit" #creates message for output
+        self.outputField.setText(message) #sets output message as converted value
+        self.complete() #calls complete function
+        
+
+#Main Body Function
+
+def main():
+    MeasurementConverter().mainloop()
+    exit(0)
+    
+ 
+#Executes the main function
+
+if __name__ == "__main__":
+    main()
